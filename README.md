@@ -3,6 +3,7 @@
 ### New Features
 * Dynamically search all records on current page (zip code searching is soon to come).
 * Custom items per page selection. Type in your desired amount and press 'enter'.
+* Mobile-friendly.
 
 ### Notes
 * loaded JSON file of 260 randomly generated objects containing required properties
