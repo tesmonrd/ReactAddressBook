@@ -74,12 +74,12 @@ class App extends Component {
       <div className="App">
 
         <div className="container" id="top-bar">
-        <Nav_Left
+        <NavLeft
           sort_term={this.state.sort_term}
           onSorting={this.onSorting}
           onSearchChange={this.onSearchChange}
         />
-        <Nav_Right
+        <NavRight
           onNumPrefChange={this.onNumPrefChange}
           list={this.state.list}
           currentPage={this.state.currentPage}
@@ -102,7 +102,7 @@ class App extends Component {
   }
 }
 
-class Nav_Left extends Component {
+class NavLeft extends Component {
   render () {
     const { sort_term, onSorting, onSearchChange} = this.props;
     return (
@@ -136,10 +136,9 @@ class Nav_Left extends Component {
   }
 }
 
-class Nav_Right extends Component {
+class NavRight extends Component {
   render() {
     const { onNumPrefChange, list, currentPage, handlePage, indexOfFirstAdd, indexOfLastAdd} = this.props;
-    console.log(indexOfFirstAdd);
     return (
     <ul id="nav-right">
           <li>
@@ -168,7 +167,7 @@ class Nav_Right extends Component {
 
 class Table extends Component {
     render() {
-    const { list, currentPage, addsPerPage, searchTerm, indexOfLastAdd, indexOfFirstAdd } = this.props;
+    const { list, addsPerPage, searchTerm, indexOfLastAdd, indexOfFirstAdd } = this.props;
     const currentAdds = list.filter(isSearched(searchTerm)).slice(indexOfFirstAdd, indexOfLastAdd);
     const pageNumbers = [];
     for (let i = 1; i <= Math.ceil(list.length / addsPerPage); i++){
