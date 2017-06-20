@@ -67,17 +67,113 @@ class App extends Component {
   }
 
   render() {
-
-    const { list, currentPage, addsPerPage } = this.state;
-    let indexOfLastAdd = currentPage * addsPerPage;
+    let indexOfLastAdd = this.state.currentPage * this.state.addsPerPage;
     if (indexOfLastAdd > list.length){ indexOfLastAdd = list.length}
-    const indexOfFirstAdd = indexOfLastAdd - addsPerPage;
-    const currentAdds = list.filter(isSearched(this.state.searchTerm)).slice(indexOfFirstAdd, indexOfLastAdd);
+    const indexOfFirstAdd = indexOfLastAdd - this.state.addsPerPage;
+    return (
+      <div className="App">
+
+        <div className="container" id="top-bar">
+        <Nav_Left
+          sort_term={this.state.sort_term}
+          onSorting={this.onSorting}
+          onSearchChange={this.onSearchChange}
+        />
+        <Nav_Right
+          onNumPrefChange={this.onNumPrefChange}
+          list={this.state.list}
+          currentPage={this.state.currentPage}
+          handlePage={this.handlePage}
+          indexOfLastAdd={indexOfLastAdd}
+          indexOfFirstAdd={indexOfFirstAdd}
+        />
+        </div>
+
+        <Table
+          list={this.state.list}
+          currentPage={this.state.currentPage}
+          addsPerPage={this.state.addsPerPage}
+          searchTerm={this.state.searchTerm}
+          indexOfLastAdd={indexOfLastAdd}
+          indexOfFirstAdd={indexOfFirstAdd}
+        />
+      </div>
+    );
+  }
+}
+
+class Nav_Left extends Component {
+  render () {
+    const { sort_term, onSorting, onSearchChange} = this.props;
+    return (
+    <ul id="nav-left">
+        <li>
+          <span className="titles">The Grand Table</span><span id="pipe"> | </span>
+          <form id="selector">
+          <label>
+          Sort By:
+          <select value={sort_term} onChange={onSorting}>
+            <option value="first">First Name</option>
+            <option value="last">Last Name</option>
+            <option value="country">Country</option>
+            <option value="city">City</option>
+            <option value="state">State</option>
+          </select>
+        </label>
+        </form>
+        </li>
+        <li>
+          <form>
+            <input
+               type="search"
+               placeholder="Search Page"
+               onChange={onSearchChange}
+            />
+          </form>
+        </li>
+        </ul>
+      );
+  }
+}
+
+class Nav_Right extends Component {
+  render() {
+    const { onNumPrefChange, list, currentPage, handlePage, indexOfFirstAdd, indexOfLastAdd} = this.props;
+    console.log(indexOfFirstAdd);
+    return (
+    <ul id="nav-right">
+          <li>
+          <form id="countselect">
+              Items per Page <input
+              type="tel"
+              onKeyPress={onNumPrefChange}
+            />
+          </form>
+          </li>
+          <li> <b>{indexOfFirstAdd} - {indexOfLastAdd}</b> of <b>{list.length}</b> </li>
+          <li><a 
+            key={currentPage - 1}
+            id={currentPage - 1}
+            onClick={handlePage}
+            > &#60; </a>
+            <a 
+            key={currentPage + 1}
+            id={currentPage + 1}
+            onClick={handlePage}
+            > &#62; </a></li>
+        </ul>
+    )
+  }
+}
+
+class Table extends Component {
+    render() {
+    const { list, currentPage, addsPerPage, searchTerm, indexOfLastAdd, indexOfFirstAdd } = this.props;
+    const currentAdds = list.filter(isSearched(searchTerm)).slice(indexOfFirstAdd, indexOfLastAdd);
     const pageNumbers = [];
     for (let i = 1; i <= Math.ceil(list.length / addsPerPage); i++){
       pageNumbers.push(i);
     }
-
     const renderAddresses = currentAdds.map(item => {
       return (
             <tr key={item.objectID}>
@@ -94,59 +190,7 @@ class App extends Component {
         });
 
     return (
-      <div className="App">
-
-        <div className="container" id="top-bar">
-        <ul id="nav-left">
-        <li>
-          <span className="titles">The Grand Table</span><span id="pipe"> | </span>
-          <form id="selector">
-          <label>
-          Sort By:
-          <select value={this.state.sort_term} onChange={this.onSorting}>
-            <option value="first">First Name</option>
-            <option value="last">Last Name</option>
-            <option value="country">Country</option>
-            <option value="city">City</option>
-            <option value="state">State</option>
-          </select>
-        </label>
-        </form>
-        </li>
-        <li>
-          <form>
-            <input
-               type="search"
-               placeholder="Search Page"
-               onChange={this.onSearchChange}
-            />
-          </form>
-        </li>
-        </ul>
-        <ul id="nav-right">
-          <li>
-          <form id="countselect">
-              Items per Page <input
-              type="tel"
-              onKeyPress={this.onNumPrefChange}
-            />
-          </form>
-          </li>
-          <li> <b>{indexOfFirstAdd} - {indexOfLastAdd}</b> of <b>{list.length}</b> </li>
-          <li><a 
-            key={this.state.currentPage - 1}
-            id={this.state.currentPage - 1}
-            onClick={this.handlePage}
-            > &#60; </a>
-            <a 
-            key={this.state.currentPage + 1}
-            id={this.state.currentPage + 1}
-            onClick={this.handlePage}
-            > &#62; </a></li>
-        </ul>
-        </div>
-
-        <div id="mobile-friendly">
+    <div id="mobile-friendly">
         <table>
           <thead>
           <tr id="headers">
@@ -165,8 +209,7 @@ class App extends Component {
         </tbody>
         </table>
         </div>
-      </div>
-    );
+    )
   }
 }
 
