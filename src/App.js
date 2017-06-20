@@ -88,7 +88,6 @@ class App extends Component {
           indexOfFirstAdd={indexOfFirstAdd}
         />
         </div>
-
         <Table
           list={this.state.list}
           currentPage={this.state.currentPage}
