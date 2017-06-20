@@ -105,8 +105,9 @@ class App extends Component {
 class NavLeft extends Component {
   render () {
     const { sort_term, onSorting, onSearchChange} = this.props;
+
     return (
-    <ul id="nav-left">
+      <ul id="nav-left">
         <li>
           <span className="titles">The Grand Table</span><span id="pipe"> | </span>
           <form id="selector">
@@ -131,26 +132,27 @@ class NavLeft extends Component {
             />
           </form>
         </li>
-        </ul>
-      );
+      </ul>
+    );
   }
 }
 
 class NavRight extends Component {
   render() {
     const { onNumPrefChange, list, currentPage, handlePage, indexOfFirstAdd, indexOfLastAdd} = this.props;
+
     return (
-    <ul id="nav-right">
-          <li>
+      <ul id="nav-right">
+        <li>
           <form id="countselect">
               Items per Page <input
               type="tel"
               onKeyPress={onNumPrefChange}
             />
           </form>
-          </li>
-          <li> <b>{indexOfFirstAdd} - {indexOfLastAdd}</b> of <b>{list.length}</b> </li>
-          <li><a 
+        </li>
+        <li> <b>{indexOfFirstAdd} - {indexOfLastAdd}</b> of <b>{list.length}</b> </li>
+        <li><a 
             key={currentPage - 1}
             id={currentPage - 1}
             onClick={handlePage}
@@ -159,14 +161,15 @@ class NavRight extends Component {
             key={currentPage + 1}
             id={currentPage + 1}
             onClick={handlePage}
-            > &#62; </a></li>
-        </ul>
+            > &#62; </a>
+        </li>
+      </ul>
     )
   }
 }
 
 class Table extends Component {
-    render() {
+  render() {
     const { list, addsPerPage, searchTerm, indexOfLastAdd, indexOfFirstAdd } = this.props;
     const currentAdds = list.filter(isSearched(searchTerm)).slice(indexOfFirstAdd, indexOfLastAdd);
     const pageNumbers = [];
@@ -189,7 +192,7 @@ class Table extends Component {
         });
 
     return (
-    <div id="mobile-friendly">
+      <div id="mobile-friendly">
         <table>
           <thead>
           <tr id="headers">
@@ -205,9 +208,9 @@ class Table extends Component {
           </thead>
           <tbody>
           {renderAddresses}
-        </tbody>
+          </tbody>
         </table>
-        </div>
+      </div>
     )
   }
 }
