@@ -2,7 +2,7 @@
 
 
 #### Change log
-6/19 - refactored App.js for more modularized code (added new components)
+6/19 - refactored App.js for more modularized code (added new components). Old code can be found here: https://github.com/tesmonrd/ReactAddressBook/tree/original_code
 
 ### New Features
 * Dynamically search all records on current page (zip code searching is soon to come).
